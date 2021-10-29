@@ -7,4 +7,5 @@ def index():
     '''
     View root page function that returns the root and its data
     '''
-    return render_template('index.html')
+    message = "Hello world from me to you"
+    return render_template('index.html', message=message)
