@@ -1,4 +1,10 @@
 from app import app
+import urllib, json
+from .models import movie
 
-#Getting the APi key
+Movie = movie.Movie
+# Getting api key
 api_key = app.config['MOVIE_API_KEY']
+
+# Getting the movie base url
+base_url = app.config["MOVIE_API_BASE_URL"]
