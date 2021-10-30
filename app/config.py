@@ -8,12 +8,11 @@ class Config:
 
 class ProdConfig(Config):
     '''
-    Production  configuration child class
+    Pruduction  configuration child class
 
     Args:
         Config: The parent configuration class with General configuration settings
     '''
-    pass
 
 
 class DevConfig(Config):
