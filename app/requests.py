@@ -1,11 +1,10 @@
+# from app import app
+# import urllib.request,json #(urllib )help us create a connection to our API URL and send a request.
 import urllib.request,json
 from .models import Movie
 
-
-
 # Getting api key
 api_key = None
-
 # Getting the movie base url
 base_url = None
 
@@ -16,18 +15,15 @@ def configure_request(app):
 
 
 
-
-
-
-def get_movies(category):
+def get_movies(category): # a function that takes in a movie category as an argument.
     '''
-    Function that gets the json responce to our url request
+    Function that gets the json response to our url request
     '''
-    get_movies_url = base_url.format(category,api_key)
+    get_movies_url = base_url.format(category,api_key) #  the final URL for our API request(get_movies_url)
 
-    with urllib.request.urlopen(get_movies_url) as url:
-        get_movies_data = url.read()
-        get_movies_response = json.loads(get_movies_data)
+    with urllib.request.urlopen(get_movies_url) as url:# function that takes in get_movies_url as an argument and send request as the url.
+        get_movies_data = url.read() #read() read the response and store in the get_movies_data.
+        get_movies_response = json.loads(get_movies_data)# json.load method convert the json responses to the python dictionary
 
         movie_results = None
 
@@ -38,15 +34,41 @@ def get_movies(category):
 
     return movie_results
 
+def process_results(movie_list):
+    '''
+    Function  that processes the movie result and transform them to a list of Objects
+
+    Args:
+        movie_list: A list of dictionaries that contain movie details
+
+    Returns :
+        movie_results: A list of movie objects
+    '''
+    movie_results = [] #empty list that in the newly created movie 
+    #looping through the list of dictionaries using the get() method.s
+    for movie_item in movie_list:
+        id = movie_item.get('id')
+        title = movie_item.get('original_title')
+        overview = movie_item.get('overview')
+        poster = movie_item.get('poster_path')
+        vote_average = movie_item.get('vote_average')
+        vote_count = movie_item.get('vote_count')
+
+        if poster:
+            movie_object = Movie(id,title,overview,poster,vote_average,vote_count)
+            movie_results.append(movie_object)
+
+    return movie_results    
+
 
 def get_movie(id):
-    get_movie_details_url = base_url.format(id,api_key)
+     get_movie_details_url = base_url.format(id,api_key)
 
-    with urllib.request.urlopen(get_movie_details_url) as url:
+     with urllib.request.urlopen(get_movie_details_url) as url:
         movie_details_data = url.read()
         movie_details_response = json.loads(movie_details_data)
 
-        movie_object = None
+        movie_object = None 
         if movie_details_response:
             id = movie_details_response.get('id')
             title = movie_details_response.get('original_title')
@@ -57,9 +79,7 @@ def get_movie(id):
 
             movie_object = Movie(id,title,overview,poster,vote_average,vote_count)
 
-    return movie_object
-
-
+     return movie_object
 
 def search_movie(movie_name):
     search_movie_url = 'https://api.themoviedb.org/3/search/movie?api_key={}&query={}'.format(api_key,movie_name)
@@ -74,33 +94,4 @@ def search_movie(movie_name):
             search_movie_results = process_results(search_movie_list)
 
 
-    return search_movie_results
-
-
-
-
-def process_results(movie_list):
-    '''
-    Function  that processes the movie result and transform them to a list of Objects
-
-    Args:
-        movie_list: A list of dictionaries that contain movie details
-
-    Returns :
-        movie_results: A list of movie objects
-    '''
-    movie_results = []
-    for movie_item in movie_list:
-        id = movie_item.get('id')
-        title = movie_item.get('original_title')
-        overview = movie_item.get('overview')
-        poster = movie_item.get('poster_path')
-        vote_average = movie_item.get('vote_average')
-        vote_count = movie_item.get('vote_count')
-
-        if poster:
-
-            movie_object = Movie(id,title,overview,poster,vote_average,vote_count)
-            movie_results.append(movie_object)
-
-    return movie_results
+    return search_movie_results     
