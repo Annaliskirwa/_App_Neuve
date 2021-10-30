@@ -1,5 +1,5 @@
 from app import app
-import urllib, json
+import urllib.request, json
 from .models import movie
 
 Movie = movie.Movie
@@ -70,5 +70,5 @@ def get_movie(id):
             vote_count = movie_details_response.get('vote_count')
 
             movie_object = Movie(id,title,overview,poster,vote_average,vote_count)
-
+    
     return movie_object
