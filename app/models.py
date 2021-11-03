@@ -1,4 +1,5 @@
 from . import db
+
 class Movie:
     '''
     Movie class to define Movie Objects
@@ -54,6 +55,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f'User {self.username}'
+    pass_secure = db.Column(db.String(255))
 
 class Role(db.Model):
     __tablename__ = 'roles'
