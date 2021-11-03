@@ -1,31 +1,10 @@
-# from flask import Flask
-# from config import DevConfig
-# from flask_bootstrap import Bootstrap
-
-# bootstrap = Bootstrap()
-
-
-
-# #Initializing our app
-
-# app= Flask(__name__,instance_relative_config = True)  # app instances we pass instance_config as the argument.
-
-
-# # Setting up configuration
-# app.config.from_object(DevConfig)
-# app.config.from_pyfile('config.py')
-
-# # Initializing Flask Extensions
-# bootstrap = Bootstrap(app)
-
-# from app import views
-# from app import error
-
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 from config import config_options
 
 bootstrap = Bootstrap()
+db = SQLAlchemy()
 
 def create_app(config_name):
 
@@ -36,6 +15,7 @@ def create_app(config_name):
 
     # Initializing flask extensions
     bootstrap.init_app(app)
+    db.init_app(app)
 
     
     # Registering the blueprint
