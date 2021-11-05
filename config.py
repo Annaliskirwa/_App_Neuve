@@ -36,9 +36,15 @@ class DevConfig(Config):
         Config: The parent configuration class with General configuration settings
     '''
 
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://annalis:New Pasword@localhost/watchlist_test'
+
+class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://annalis:New Pasword@localhost/watchlist'
     DEBUG = True
- # cinfig_options that help us access different configuration option classes.
+
 config_options = {
 'development':DevConfig,
-'production':ProdConfig
+'production':ProdConfig,
+'test':TestConfig
 }
