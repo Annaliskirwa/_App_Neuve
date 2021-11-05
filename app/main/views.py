@@ -5,7 +5,7 @@ from .forms import ReviewForm, UpdateProfile
 from .. import db,photos
 from ..models import Reviews, User
 from flask_login import login_required, current_user
-
+import markdown2
 
 
 #views
@@ -90,6 +90,15 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+@main.route('/review/<int:id>')
+def single_review(id):
+    review=Review.query.get(id)
+    if review is None:
+        abort(404)
+    format_review = markdown2.markdown(review.movie_review,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('review.html',review = review,format_review=format_review)
+
 
 @main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
 @login_required
