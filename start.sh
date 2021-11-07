@@ -4,3 +4,4 @@ export SECRET_KEY=Annalisisawesome
 export MAIL_USERNAME=Annalis
 export MAIL_PASSWORD=Annalis
 python3.6 manage.py server
+
